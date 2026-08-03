@@ -375,9 +375,6 @@ body {
     filter 0.8s ease,
     transform 0.8s ease;
   z-index: -2;
-  object-fit: contain;
-  width: 100%;
-  height: auto;
 }
 
 /* Lớp phủ sáng tạo độ tương phản cho chữ */
@@ -425,7 +422,7 @@ body {
     font-size: 2.8rem;
   }
 
-  #her-name {
+  #name {
     font-size: 3.2rem;
   }
 
@@ -451,11 +448,32 @@ body {
     margin-bottom: 30px;
   }
 
-  #her-name {
+  #name {
     font-size: 2.6rem;
   }
 
   .gift {
     transform: scale(0.85);
+  }
+
+  .cake-img {
+    max-width: 180px;
+  }
+
+  .letter-frame {
+    padding: 20px;
+    font-size: 1rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .letter-frame.reveal {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (max-width: 390px) {
+  .letter-frame::before {
+    /* Đảm bảo ảnh nền vừa khít hoàn toàn vào khung ở màn hình nhỏ */
+    background-size: 100% 100%;
   }
 }
