@@ -1,0 +1,415 @@
+/* Khởi tạo biến màu sắc pastel, lãng mạn */
+:root {
+  --primary-color: #ffb6c1; /* Hồng nhạt / Pastel pink */
+  --secondary-color: #fff0f5; /* Lavender blush / Kem hồng */
+  --text-color: #552d3a; /* Màu chữ ấm áp */
+  --accent-color: #ff69b4; /* Hot pink để làm điểm nhấn */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Quicksand", sans-serif;
+  color: var(--text-color);
+  height: 100vh;
+  overflow: hidden; /* Tránh có cuộn trang */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0c10;
+}
+
+/* Background Day to Night */
+.bg-sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  /* Gradient dài gấp 4 lần để di chuyển mượt mà từ ngày sang đêm */
+  background: linear-gradient(
+    to bottom,
+    #0d0221,
+    /* Đêm khuya */ #1a0b2e,
+    /* Đêm */ #ff9e7c,
+    /* Hoàng hôn */ #87ceeb /* Ngày trong xanh */
+  );
+  background-size: 100% 400%;
+  animation: dayToNight 20s ease-in-out infinite alternate;
+}
+
+@keyframes dayToNight {
+  0% {
+    background-position: 0% 100%;
+  } /* Bắt đầu ở phần dưới (Ngày) */
+  100% {
+    background-position: 0% 0%;
+  } /* Kết thúc ở phần trên (Đêm) */
+}
+
+/* Container sao băng */
+.star-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none; /* Tránh chặn click vào các nút */
+}
+
+.meteor {
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+  border-radius: 50%;
+  transform: rotate(45deg);
+  opacity: 0;
+  animation: meteorFall 4s linear infinite;
+}
+
+@keyframes meteorFall {
+  0% {
+    transform: translate(100px, -100px) rotate(45deg);
+    opacity: 1;
+    height: 80px;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-500px, 500px) rotate(45deg);
+    opacity: 0;
+    height: 0px;
+  }
+}
+
+/* Các lớp screen cơ bản hỗ trợ chuyển cảnh mượt */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 1s ease-in-out,
+    visibility 1s ease-in-out;
+  padding: 20px;
+}
+
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Nút Bật / Tắt Audio */
+.mute-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  cursor: pointer;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition:
+    background 0.3s,
+    transform 0.2s;
+}
+
+.mute-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.1);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-color);
+}
+
+/* ============================
+   BƯỚC 1: START SCREEN
+   ============================ */
+.pulse-btn {
+  padding: 15px 40px;
+  font-size: 1.8rem;
+  font-family: "DynaPuff", sans-serif;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+  color: #c91f5c;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+  animation: pulse 2s infinite;
+  transition:
+    transform 0.2s,
+    background 0.3s;
+}
+
+.pulse-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 30px rgba(255, 105, 180, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.5);
+  }
+}
+
+/* ============================
+   BƯỚC 2: GIFT SCREEN
+   ============================ */
+.birthday-title {
+  font-family: "Dancing Script", cursive;
+  font-size: 3.5rem;
+  color: var(--accent-color);
+  margin-bottom: 50px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.2);
+  line-height: 1.2;
+}
+
+#name {
+  color: #e91e63;
+  font-size: 4rem;
+}
+
+.gift-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Thiết kế Hộp Quà (CSS Box) */
+.gift {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  /* Hiệu ứng rung rinh (shake/bounce) liên tục */
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.gift-box {
+  position: absolute;
+  bottom: 0;
+  width: 150px;
+  height: 110px;
+  background-color: #ff4d6d;
+  border-radius: 5px;
+  box-shadow: inset -15px 0 rgba(0, 0, 0, 0.1);
+}
+
+.gift-top {
+  position: absolute;
+  top: 15px;
+  left: -10px;
+  width: 170px;
+  height: 35px;
+  background-color: #c9184a;
+  border-radius: 5px;
+  box-shadow: inset -15px -5px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* Dây ruy băng */
+.ribbon-x {
+  position: absolute;
+  top: 15px;
+  left: 60px;
+  width: 30px;
+  height: 135px;
+  background-color: #ffd166;
+  z-index: 3;
+}
+
+.ribbon-y {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 150px;
+  height: 30px;
+  background-color: #ffd166;
+  z-index: 1;
+}
+
+.hint-text {
+  margin-top: 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #999;
+  animation: fadeInOut 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  15% {
+    transform: translateY(-15px) rotate(-3deg);
+  }
+  30% {
+    transform: translateY(0) rotate(0deg);
+  }
+  45% {
+    transform: translateY(-5px) rotate(3deg);
+  }
+  60% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ============================
+   BƯỚC 3: SURPRISE SCREEN
+   ============================ */
+.surprise-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  max-width: 650px;
+  width: 100%;
+}
+
+.cake-img {
+  width: 100%;
+  max-width: 350px;
+  /* Làm viền mượt mà */
+  border-radius: 20px;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
+  animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Khung thư chứa lời chúc chi tiết */
+.letter-frame {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 35px;
+  border-radius: 15px;
+  border: 2px dashed var(--accent-color);
+  box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
+  width: 100%;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #555;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.letter-frame::before {
+  content: "🎉";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  background: #fff;
+  border-radius: 90%;
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.letter-content {
+  line-height: inherit;
+}
+
+/* ============================
+   RESPONSIVE (MOBILE FIRST APPROACH)
+   ============================ */
+@media (max-width: 768px) {
+  .birthday-title {
+    font-size: 2.8rem;
+  }
+
+  #her-name {
+    font-size: 3.2rem;
+  }
+
+  .pulse-btn {
+    font-size: 1.5rem;
+    padding: 12px 30px;
+  }
+
+  .cake-img {
+    max-width: 250px;
+  }
+
+  .letter-frame {
+    font-size: 1.1rem;
+    padding: 25px;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+  .birthday-title {
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+  }
+
+  #her-name {
+    font-size: 2.6rem;
+  }
+
+  .gift {
+    transform: scale(0.85);
+  }
+}

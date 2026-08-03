@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday!</title>
+    <!-- Thư viện Font chữ đẹp (Quicksand & Dancing Script) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=DynaPuff:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CSS Tùy chỉnh -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Thư viện canvas-confetti tạo hiệu ứng pháo hoa giấy -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  </head>
+  <body>
+    <!-- Background Bầu trời Day & Night -->
+    <div class="bg-sky"></div>
+
+    <!-- Hiệu ứng sao băng -->
+    <div class="star-container">
+      <div
+        class="meteor"
+        style="left: 10%; top: -100px; animation-delay: 0s"
+      ></div>
+      <div
+        class="meteor"
+        style="left: 30%; top: -100px; animation-delay: 1.5s"
+      ></div>
+      <div
+        class="meteor"
+        style="left: 50%; top: -100px; animation-delay: 3s"
+      ></div>
+      <div
+        class="meteor"
+        style="left: 70%; top: -100px; animation-delay: 4.5s"
+      ></div>
+      <div
+        class="meteor"
+        style="left: 90%; top: -100px; animation-delay: 2s"
+      ></div>
+    </div>
+
+    <!-- Nhạc nền vòng lặp -->
+    <audio id="bg-music" loop>
+      <source src="./assets/bg-music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Nút Tắt/Bật âm thanh ở góc phải -->
+    <button id="mute-btn" class="mute-btn">
+      <svg
+        id="unmute-icon"
+        class="icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+        <path
+          d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"
+        ></path>
+      </svg>
+      <svg
+        id="mute-icon"
+        class="icon hidden"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+        <line x1="23" y1="1" x2="1" y2="23"></line>
+      </svg>
+    </button>
+
+    <!-- BƯỚC 1: Màn hình chờ (Gatekeeper Screen) -->
+    <div id="start-screen" class="screen active">
+      <button id="start-btn" class="pulse-btn">Press here ❤️</button>
+    </div>
+
+    <!-- BƯỚC 2: Màn hình Hộp quà & Lời chúc (Gift Screen) -->
+    <div id="gift-screen" class="screen hidden">
+      <h1 class="birthday-title">
+        Happy Birthday<br />
+        <span id="name"></span>
+      </h1>
+      <div class="gift-container" id="gift-box">
+        <!-- Hộp quà vẽ bằng CSS -->
+        <div class="gift">
+          <div class="gift-top"></div>
+          <div class="gift-box"></div>
+          <div class="ribbon-x"></div>
+          <div class="ribbon-y"></div>
+        </div>
+        <p class="hint-text">Open the mystery box!</p>
+      </div>
+    </div>
+
+    <!-- BƯỚC 3: Màn hình Bật mở (Surprise Screen) -->
+    <div id="surprise-screen" class="screen hidden">
+      <div class="surprise-content">
+        <!-- Bánh sinh nhật -->
+        <img
+          src="./assets/birthday-cake.png"
+          alt="Birthday Cake"
+          class="cake-img"
+        />
+        <!-- Khung thư / Lời chúc -->
+        <div class="letter-frame">
+          <p class="letter-content">
+            To my favorite person ❤️
+            <br /><br />
+            Wishing you a warm, sweet birthday filled with so much joy. Thank
+            you for coming into my life and bringing the most vibrant colors
+            into it.
+            <br /><br />
+            May you always stay happy, radiant, and keep smiling as brightly as
+            you do now! 💕
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script Tùy chỉnh -->
+    <script src="script.js"></script>
+  </body>
+</html>
