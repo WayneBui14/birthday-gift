@@ -118,4 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Chuyển sang màn hình bật mở bất ngờ
     transitionScreen(giftScreen, surpriseScreen);
   });
+
+  // Sự kiện nhấn vào thư để Reveal background image
+  const letterFrame = document.querySelector(".letter-frame");
+  if (letterFrame) {
+    letterFrame.addEventListener("click", () => {
+      letterFrame.classList.toggle("reveal");
+    });
+  }
 });
