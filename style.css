@@ -315,16 +315,15 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 5px;
   max-width: 650px;
   width: 100%;
 }
 
-.cake-img {
+.lion-img {
   width: 100%;
+  height: 30%;
   max-width: 350px;
-  /* Làm viền mượt mà */
-  border-radius: 20px;
   object-fit: contain;
   filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
   animation: float 4s infinite ease-in-out;
@@ -342,7 +341,7 @@ body {
 
 /* Khung thư chứa lời chúc chi tiết */
 .letter-frame {
-  padding: 35px;
+  padding: 15px;
   border-radius: 15px;
   border: 2px dashed var(--accent-color);
   box-shadow: 0 10px 30px rgba(255, 105, 180, 0.15);
@@ -360,21 +359,33 @@ body {
     box-shadow 0.8s ease;
 }
 
-/* Background hình ảnh bị làm mờ (kính mờ) */
-.letter-frame::before {
-  content: "";
+/* Các lớp ảnh nền riêng biệt để hỗ trợ cross-fade mượt mà */
+.letter-bg {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("./assets/letter-frame-bg.jpg") center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
   filter: blur(8px);
-  transform: scale(1.15); /* Phóng to nhẹ để giấu viền mờ */
+  transform: scale(1.15);
+  opacity: 0;
   transition:
+    opacity 0.8s ease,
     filter 0.8s ease,
     transform 0.8s ease;
   z-index: -2;
+}
+
+.bg-1 {
+  background-image: url("./assets/letter-frame-bg.jpg");
+  opacity: 1; /* Mặc định hiển thị mờ (kính mờ) */
+}
+
+.bg-2 {
+  background-image: url("./assets/birthday-cake.png");
+  /* opacity: 0 kế thừa từ .letter-bg — ẩn cho đến khi reveal-2 */
 }
 
 /* Lớp phủ sáng tạo độ tương phản cho chữ */
@@ -395,23 +406,39 @@ body {
   transition: opacity 0.5s ease;
 }
 
-/* Hiệu ứng Reveal khi nhấn vào */
-.letter-frame.reveal {
+/* Reveal chung: ẩn chữ, ẩn viền, ẩn lớp phủ trắng */
+.letter-frame.reveal,
+.letter-frame.reveal-2 {
   border-color: transparent;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
-.letter-frame.reveal::before {
+.letter-frame.reveal::after,
+.letter-frame.reveal-2::after {
+  opacity: 0;
+}
+
+.letter-frame.reveal .letter-content,
+.letter-frame.reveal-2 .letter-content {
+  opacity: 0;
+}
+
+/* Reveal ảnh 1: xóa blur để hiện rõ letter-frame-bg.jpg */
+.letter-frame.reveal .bg-1 {
+  opacity: 1;
   filter: blur(0);
   transform: scale(1);
 }
 
-.letter-frame.reveal::after {
-  opacity: 0;
+/* Reveal ảnh 2: ẩn bg-1, cross-fade sang birthday-cake.png */
+.letter-frame.reveal-2 .bg-1 {
+  opacity: 0; /* fade out ảnh 1 */
 }
 
-.letter-frame.reveal .letter-content {
-  opacity: 0;
+.letter-frame.reveal-2 .bg-2 {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
 }
 
 /* ============================
@@ -431,7 +458,7 @@ body {
     padding: 12px 30px;
   }
 
-  .cake-img {
+  .lion-img {
     max-width: 250px;
   }
 
@@ -439,7 +466,7 @@ body {
     font-size: 1.1rem;
     padding: 25px;
     line-height: 1.6;
-    height: 40vh;
+    height: 35vh;
   }
 }
 
@@ -457,7 +484,7 @@ body {
     transform: scale(0.85);
   }
 
-  .cake-img {
+  .lion-img {
     max-width: 180px;
   }
 
@@ -465,6 +492,7 @@ body {
     padding: 20px;
     font-size: 1rem;
     -webkit-tap-highlight-color: transparent;
+    height: fit-content;
   }
 
   .letter-frame.reveal {
@@ -476,5 +504,8 @@ body {
   .letter-frame::before {
     /* Đảm bảo ảnh nền vừa khít hoàn toàn vào khung ở màn hình nhỏ */
     background-size: 100% 100%;
+  }
+  .letter-content {
+    font-size: 0.9rem;
   }
 }

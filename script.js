@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const muteIcon = document.getElementById("mute-icon");
 
   const nameSpan = document.getElementById("name");
-
+  const letterFrame = document.querySelector(".letter-frame");
   // Gán tên vào thẻ HTML
   if (nameSpan) {
     nameSpan.textContent = NAME;
@@ -119,11 +119,20 @@ document.addEventListener("DOMContentLoaded", () => {
     transitionScreen(giftScreen, surpriseScreen);
   });
 
-  // Sự kiện nhấn vào thư để Reveal background image
-  const letterFrame = document.querySelector(".letter-frame");
+  // Sự kiện nhấn vào thư để Reveal background image (cycle qua 3 trạng thái)
   if (letterFrame) {
     letterFrame.addEventListener("click", () => {
-      letterFrame.classList.toggle("reveal");
+      if (!letterFrame.classList.contains("reveal") && !letterFrame.classList.contains("reveal-2")) {
+        // Trạng thái 1: Hiện ảnh letter-frame-bg.jpg
+        letterFrame.classList.add("reveal");
+      } else if (letterFrame.classList.contains("reveal")) {
+        // Trạng thái 2: Hiện ảnh birthday-cake.png
+        letterFrame.classList.remove("reveal");
+        letterFrame.classList.add("reveal-2");
+      } else {
+        // Trạng thái 3: Quay lại hiện chữ
+        letterFrame.classList.remove("reveal-2");
+      }
     });
   }
 });
